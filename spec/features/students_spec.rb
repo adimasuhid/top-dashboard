@@ -56,5 +56,50 @@ describe "Students Page", :type => :features do
       page.should have_css('form#new_student')
     end
 
+    context "creating a student" do
+      before :each do
+        visit new_student_path
+        fill_in("student[first_name]", with: "Thessa")
+        fill_in("student[last_name]", with: "Cunanan")
+        fill_in("student[school]", with: "SanLo")
+        select('Gr 1', from: 'student[year_level]')
+      end
+
+      context "given complete details" do
+        it "redirects to index path" do
+          click_button 'Save Student'
+          current_path.should == students_path
+        end
+
+        it "creates a student" do
+          expect{ click_button 'Save Student' }.to change(Student, :count).by(1)
+        end
+
+        it "shows a success message" do
+          click_button 'Save Student'
+          page.should have_content('Success!')
+        end
+      end
+
+      context "given incomplete details" do
+        before :each do
+          fill_in("student[school]", with: "")
+        end
+        it "redirects to new student path" do
+          click_button 'Save Student'
+          current_path.should == new_student_path
+        end
+
+        it "does not creates a student" do
+          expect{ click_button 'Save Student'}.to change(Student, :count).by(0)
+        end
+
+        it "shows an error message" do
+          click_button 'Save Student'
+          page.should have_content('Oops!')
+        end
+      end
+    end
+
   end
 end

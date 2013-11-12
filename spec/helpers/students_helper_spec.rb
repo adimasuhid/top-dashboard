@@ -1,15 +1,13 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the StudentsHelper. For example:
-#
-# describe StudentsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 describe StudentsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#select_options" do
+    it "should be an instance of array" do
+      select_options(Student::YEAR_LEVEL).should be_an_instance_of Array
+    end
+
+    it "contains ['Gr 1', 0] given YEAR_LEVEL" do
+      select_options(Student::YEAR_LEVEL).first.should == ['Gr 1', 0]
+    end
+  end
 end

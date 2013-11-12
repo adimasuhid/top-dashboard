@@ -1,0 +1,9 @@
+= f.label "First Name"
+= f.text_field :first_name
+= f.label "Last Name"
+= f.text_field :last_name
+= f.label "School"
+= f.text_field :school
+= f.label "Year Level"
+= f.select :year_level, options_for_select(select_options(@year_levels))
+= f.submit "Save Student"
