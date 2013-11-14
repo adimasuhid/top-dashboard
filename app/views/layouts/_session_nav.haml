@@ -1,0 +1,8 @@
+#user_nav
+  - if current_user
+    = "Logged in as #{current_user.email}"
+    = link_to "Sign Out", sign_out_path
+  - else
+    = link_to "Sign Up", sign_up_path
+    or
+    = link_to "Sign In", sign_in_path

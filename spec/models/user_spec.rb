@@ -40,14 +40,16 @@ describe User do
 
       context "Given a matching email password" do
         it "returns a User object" do
-          pending #requires encrypt password
           user = User.authenticate("wat@example.com", "lala")
           user.should be_an_instance_of User
         end
       end
 
       context "Given a wrong email/password" do
-        it "returns nil"
+        it "returns nil" do
+          user = User.authenticate("wat@example.com", "l")
+          user.should be_nil
+        end
       end
     end
   end

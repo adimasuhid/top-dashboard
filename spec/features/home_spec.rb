@@ -11,7 +11,7 @@ describe "Home Page", :type => :feature  do
     end
 
     it "shows a login button" do
-      page.should have_link 'login'
+      page.should have_link 'Sign In'
     end
 
     context "students link" do
