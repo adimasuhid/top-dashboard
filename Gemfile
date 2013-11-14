@@ -29,6 +29,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 gem 'pure-rails'
+gem 'bcrypt-ruby'
 
 group :development, :test do
   gem 'rb-fsevent'
