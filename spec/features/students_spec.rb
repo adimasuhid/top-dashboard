@@ -21,6 +21,22 @@ describe "Students Page", :type => :features do
       end
     end
 
+    context "edit student link" do
+      before :each do
+        @student = FactoryGirl.create :student
+        visit students_path
+      end
+
+      it "shows an edit student link" do
+        page.should have_link 'edit student'
+      end
+
+      it "redirects to edit  students page" do
+        click_link("edit student")
+        current_path.should == edit_student_path(@student)
+      end
+    end
+
     context "table of students" do
       it "shows a table with students as id" do
         page.should have_css('table#students')

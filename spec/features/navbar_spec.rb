@@ -1,8 +1,13 @@
 require 'spec_helper'
 
 describe "Navigation Bar", :type => :feature do
+  let(:user) {FactoryGirl.create(:user)}
+
   before :each do
-    visit '/profile'
+    visit '/sign_in'
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
+    click_button "Sign in"
   end
 
   context "students link" do

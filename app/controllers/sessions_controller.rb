@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.authenticate(session_params[:email], session_params[:password])
     if user
       session[:user_id] = user.id
-      redirect_to user_path(user.id), flash: {success: "You have logged in."}
+      redirect_to profile_path, flash: {success: "You have logged in."}
     else
       flash.now[:error] = "Invalid email or password."
       render "new"

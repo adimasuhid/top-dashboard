@@ -21,7 +21,7 @@ describe "Login Page", :type => :feature do
       end
 
       it "redirects to profile page" do
-        current_path.should == user_path(user.id)
+        current_path.should == profile_path
       end
 
       it "shows logout button" do
