@@ -14,16 +14,6 @@ describe "Home Page", :type => :feature  do
       page.should have_link 'Sign In'
     end
 
-    context "students link" do
-      it "shows a students button" do
-        page.should have_link 'students'
-      end
-
-      it "redirects to students page" do
-        click_link("students")
-        current_path.should == students_path
-      end
-    end
 
   end
 end

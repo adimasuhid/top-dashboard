@@ -43,6 +43,71 @@ describe "Students Page", :type => :features do
     end
   end
 
+  describe "Get /students/:id/edit" do
+    before :each do
+      @user = FactoryGirl.create(:student)
+      visit edit_student_path(@user)
+    end
+
+    it "renders success" do
+      expect(page.status_code).to be(200)
+    end
+
+    it "contains a form" do
+      page.should have_css("form#edit_student_#{@user.id}")
+    end
+
+    it "does not create a new student on save" do
+      expect{click_button 'Save Student'}.not_to change(Student, :count)
+    end
+
+    context "editing a student" do
+      before :each do
+        @user = FactoryGirl.create(:student)
+        visit edit_student_path(@user)
+        @new_name = "Lala"
+        fill_in("student[first_name]", with: "#{@new_name}")
+      end
+
+      context "given complete details" do
+
+        it "updates first name" do
+          expect do
+            click_button 'Save Student'
+            @user.reload
+          end.to change(@user, :first_name)
+        end
+
+        it "shows a success message" do
+          expect(page.status_code).to be(200)
+        end
+
+        it "redirects to students path" do
+          click_button 'Save Student'
+          current_path.should == students_path
+        end
+      end
+
+      context "given incomplete details" do
+        before :each do
+          fill_in("student[first_name]", with: "")
+        end
+
+        it "shows an error message" do
+          click_button 'Save Student'
+          page.should have_content('Oops!')
+        end
+
+        it "updates first name" do
+          expect do
+            click_button 'Save Student'
+            @user.reload
+          end.not_to change(@user, :first_name)
+        end
+      end
+    end
+  end
+
   describe "Get /students/new" do
     before :each do
       visit new_student_path

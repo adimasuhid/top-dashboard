@@ -8,6 +8,20 @@ class StudentsController < ApplicationController
     @year_levels = Student::YEAR_LEVEL
   end
 
+  def edit
+    @student = Student.find(params[:id])
+    @year_levels = Student::YEAR_LEVEL
+  end
+
+  def update
+    @student = Student.find(params[:id])
+    if @student.update_attributes(student_params)
+      redirect_to students_path, :flash => {success: "Updated Artist"}
+    else
+      redirect_to edit_student_path, :flash => {error: "Fill in all details"}
+    end
+  end
+
   def create
     @student = Student.new(student_params)
     if @student.save
