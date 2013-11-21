@@ -1,6 +1,6 @@
 .form-group
   = f.label "Session Date"
-  = f.text_field :session_date, class: "form-control", placeholder: "Session Date"
+  = f.text_field :session_date, class: "form-control datepicker", placeholder: "Session Date", data: {format:"YYYY-MM-DD"}
 .form-group
   = f.label "student"
   %br
@@ -12,3 +12,10 @@
   = f.label "notes"
   = f.text_area :notes, class: "form-control", placeholder: "Notes"
 = f.submit "Save Student", class: "btn btn-primary"
+
+:javascript
+  $(document).ready(function(){
+    $('.datepicker').datetimepicker({
+      pickTime: false
+    });
+  })
