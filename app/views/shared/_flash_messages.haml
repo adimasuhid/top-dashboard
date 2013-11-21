@@ -1,6 +1,10 @@
 -if flash[:success]
-  %strong Success!
-  = flash[:success]
+  .alert.alert-success.alert-dismissable
+    = button_tag "x", class: "close", data: {dismiss: "alert"}, aria: {hidden: true}
+    %strong Success!
+    = flash[:success]
 -if flash[:error]
-  %strong Oops!
-  = flash[:error]
+  .alert.alert-danger.alert-dismissable
+    = button_tag "x", class: "close", data: {dismiss: "alert"}, aria: {hidden: true}
+    %strong Oops!
+    = flash[:error]

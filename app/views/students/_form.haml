@@ -1,9 +1,13 @@
-= f.label "First Name"
-= f.text_field :first_name
-= f.label "Last Name"
-= f.text_field :last_name
-= f.label "School"
-= f.text_field :school
-= f.label "Year Level"
-= f.select :year_level, options_for_select(select_options_hash(@year_levels))
-= f.submit "Save Student"
+.form-group
+  = f.label "First Name"
+  = f.text_field :first_name, class: "form-control", placeholder: "First Name"
+.form-group
+  = f.label "Last Name"
+  = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
+.form-group
+  = f.label "School"
+  = f.text_field :school, class: "form-control", placeholder: "School"
+.form-group
+  = f.label "Year Level"
+  = f.select :year_level, options_for_select(select_options_hash(@year_levels))
+= f.submit "Save Student", class: "btn btn-primary btn-block btn-lg"

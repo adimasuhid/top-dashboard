@@ -1,9 +1,14 @@
-= f.label "Session Date"
-= f.text_field :session_date
-= f.label "student"
-= f.select :student, options_for_select(select_options(@students, :name))
-= f.label 'duration'
-= f.text_field :duration
-= f.label "notes"
-= f.text_field :notes
-= f.submit "Save Student"
+.form-group
+  = f.label "Session Date"
+  = f.text_field :session_date, class: "form-control", placeholder: "Session Date"
+.form-group
+  = f.label "student"
+  %br
+  = f.select :student, options_for_select(select_options(@students, :name))
+.form-group
+  = f.label 'duration'
+  = f.text_field :duration, class: "form-control", placeholder: "In Hours (ie 1.5)"
+.form-group
+  = f.label "notes"
+  = f.text_area :notes, class: "form-control", placeholder: "Notes"
+= f.submit "Save Student", class: "btn btn-primary"

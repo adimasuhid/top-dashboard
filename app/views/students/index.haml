@@ -1,14 +1,17 @@
-%h1 Students
+%h1
+  Your Students
+  .pull-right
+    = link_to "add a student", new_student_path, class: "btn btn-primary"
 
-= link_to "add a student", new_student_path
 
-%table#students
+%table.table.table-hover#students
   %thead
     %tr
       %th First Name
       %th Last Name
       %th School
       %th Year Level
+      %th
   %tbody
     - @students.each do |student|
       %tr
@@ -16,4 +19,4 @@
         %td= student.last_name
         %td= student.school
         %td= student.year_level_name
-        %td= link_to "edit student", edit_student_path(student)
+        %td= link_to "edit student", edit_student_path(student), class: "btn btn-primary"
