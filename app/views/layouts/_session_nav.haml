@@ -1,8 +1,11 @@
-#user_nav
-  - if current_user
-    = "Logged in as #{current_user.email}"
-    = link_to "Sign Out", sign_out_path
-  - else
-    = link_to "Sign Up", sign_up_path
-    or
-    = link_to "Sign In", sign_in_path
+%nav.navbar.navbar-default.navbar-fixed-top#user_nav{role: "navigation"}
+  .navbar-header
+    =link_to "Top Tutorials", root_path, class: "navbar-brand"
+  .collapse.navbar-collapse#user-navbar-collapse
+    %ul.nav.navbar-nav.pull-right
+      - if current_user
+        -#%li= "Logged in as #{current_user.email}"
+        %li= link_to "Sign Out", sign_out_path
+      - else
+        %li= link_to "Sign Up", sign_up_path
+        %li= link_to "Sign In", sign_in_path

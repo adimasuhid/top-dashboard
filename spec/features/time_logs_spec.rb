@@ -80,10 +80,42 @@ describe "Time Logs", :type => :feature do
     end
 
     context "creating a time log" do
-      before :each do
+      context "given complete details" do
+        it "creates a time log entry"
+        it "redirects to index path"
+        it "shows a success message"
+      end
 
+      context "given incomplete details" do
+        it "does not create a time log entry"
+        it "redirects to new path"
+        it "shows an error message"
       end
     end
+  end
 
+  describe "GET /time_logs/:id/edit" do
+    #before :each do
+      #user_sign_in(user.email, user.password)
+      #visit new_time_log_path
+    #end
+
+    it "renders success"
+
+    it "contains a form"
+
+    context "editing a time log" do
+      context "given complete details" do
+        it "updates a time log entry"
+        it "redirects to index path"
+        it "shows a success message"
+      end
+
+      context "given incomplete details" do
+        it "does not cupdate a time log entry"
+        it "redirects to edit path"
+        it "shows an error message"
+      end
+    end
   end
 end

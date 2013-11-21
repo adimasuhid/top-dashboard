@@ -31,6 +31,9 @@ gem 'jbuilder', '~> 1.2'
 gem 'pure-rails'
 gem 'bcrypt-ruby'
 
+gem 'twitter-bootstrap-rails'
+gem 'font-awesome-rails'
+
 group :development, :test do
   gem 'rb-fsevent'
   gem 'guard'
