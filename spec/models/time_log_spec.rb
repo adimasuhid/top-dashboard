@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe TimeLog do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "changes nil duration to 0"
 end

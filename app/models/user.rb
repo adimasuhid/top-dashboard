@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :password, confirmation: true
 
+  has_many :time_logs
+
   before_save :encrypt_password
 
   def self.authenticate(email, password)

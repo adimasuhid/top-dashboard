@@ -42,6 +42,7 @@ end
 
 group :test do
   gem 'factory_girl'
+  gem 'database_cleaner'
 end
 
 group :doc do

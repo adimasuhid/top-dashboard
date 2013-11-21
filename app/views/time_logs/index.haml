@@ -1,1 +1,18 @@
 %h1 Your Time Logs
+= link_to "add a time log", new_time_log_path
+
+%table#time_logs
+  %thead
+    %tr
+      %th Student Name
+      %th Date
+      %th Duration
+      %th Notes
+  %tbody
+    - @time_logs.each do |time_log|
+      %tr
+        %td= time_log.student.name
+        %td= time_log.session_date
+        %td= display_hours(time_log.duration)
+        %td= time_log.notes
+        %td= link_to "edit time log", edit_time_log_path(time_log)

@@ -15,9 +15,7 @@ describe "Login Page", :type => :feature do
       let(:user) {FactoryGirl.create(:user)}
 
       before :each do
-        fill_in "Email", with: user.email
-        fill_in "Password", with: user.password
-        click_button "Sign in"
+        user_sign_in(user.email, user.password)
       end
 
       it "redirects to profile page" do
@@ -37,9 +35,7 @@ describe "Login Page", :type => :feature do
       let(:user) {FactoryGirl.create(:user)}
 
       before :each do
-        fill_in "Email", with: user.email
-        fill_in "Password", with: "woot"
-        click_button "Sign in"
+        user_sign_in(user.email, "woot")
       end
 
       it "redirects to current page" do
@@ -56,10 +52,7 @@ describe "Login Page", :type => :feature do
   describe "Sign Out" do
     let(:user) {FactoryGirl.create(:user)}
     before :each do
-      visit "/sign_in"
-      fill_in "Email", with: user.email
-      fill_in "Password", with: user.password
-      click_button "Sign in"
+      user_sign_in(user.email, user.password)
       click_link "Sign Out"
     end
 

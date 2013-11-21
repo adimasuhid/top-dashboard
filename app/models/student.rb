@@ -1,6 +1,8 @@
 class Student < ActiveRecord::Base
   validates :first_name, :last_name, :year_level, :school, presence: true
 
+  has_many :time_logs
+
   YEAR_LEVEL = {
     "Gr 1" => 0,
     "Gr 2" => 1,
@@ -17,6 +19,10 @@ class Student < ActiveRecord::Base
 
   def year_level_name
     YEAR_LEVEL.key(year_level)
+  end
+
+  def name
+    "#{first_name} #{last_name}"
   end
 
 end

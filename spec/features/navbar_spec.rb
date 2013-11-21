@@ -4,10 +4,7 @@ describe "Navigation Bar", :type => :feature do
   let(:user) {FactoryGirl.create(:user)}
 
   before :each do
-    visit '/sign_in'
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_button "Sign in"
+    user_sign_in(user.email, user.password)
   end
 
   context "students link" do

@@ -1,15 +1,17 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the TimeLogsHelper. For example:
-#
-# describe TimeLogsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 describe TimeLogsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#display_hours" do
+    before :each do
+      @duration = 1.0
+    end
+
+    it "displays a number" do
+      expect(display_hours(@duration)) =~ /%d\.%d hrs/
+    end
+
+    it "displays 'hrs'" do
+      display_hours(@duration).include?("hrs")
+    end
+  end
 end
