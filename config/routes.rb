@@ -2,7 +2,7 @@ TopDashboard::Application.routes.draw do
    resources :sessions, only: [:new, :create, :destroy]
    resources :students
    resources :users, only: [:show,:new, :create]
-   resources :time_logs, only: [:index, :new, :edit]
+   resources :time_logs
 
    get '/profile', to: 'users#show'
    get '/sign_up', to: 'users#new'
