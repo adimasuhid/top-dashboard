@@ -1,7 +1,7 @@
 TopDashboard::Application.routes.draw do
    resources :sessions, only: [:new, :create, :destroy]
    resources :students
-   resources :users, only: [:show,:new]
+   resources :users, only: [:show,:new, :create]
    resources :time_logs, only: [:index, :new, :edit]
 
    get '/profile', to: 'users#show'

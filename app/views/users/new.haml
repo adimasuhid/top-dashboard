@@ -1,0 +1,21 @@
+.container
+
+  = form_tag users_path, class: "form-signin" do
+    %h1.form-signin-heading Sign up
+    %p
+      = text_field_tag :email, params[:email],
+            placeholder: "Email address",
+            required: "autofocus",
+            class: "form-control"
+    %p
+      = password_field_tag :password, nil,
+            placeholder: "Password",
+            required: "autofocus",
+            class: "form-control"
+    %p
+      = password_field_tag :password_confirmation, nil,
+            placeholder: "Password Confirmation",
+            required: "autofocus",
+            class: "form-control"
+    %p
+      = button_tag "Sign Up", class: "btn btn-lg btn-primary btn-block"
