@@ -9,11 +9,11 @@ describe "Navigation Bar", :type => :feature do
 
   context "students link" do
     it "shows a students button" do
-      page.should have_link 'students'
+      page.should have_link 'Students'
     end
 
     it "redirects to students page" do
-      click_link("students")
+      click_link("Students")
       current_path.should == students_path
     end
   end
