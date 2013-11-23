@@ -3,6 +3,16 @@
   = form_tag users_path, class: "form-signin" do
     %h1.form-signin-heading Sign up
     %p
+      = text_field_tag :first_name, params[:first_name],
+            placeholder: "First Name",
+            required: "autofocus",
+            class: "form-control"
+    %p
+      = text_field_tag :last_name, params[:last_name],
+            placeholder: "Last Name",
+            required: "autofocus",
+            class: "form-control"
+    %p
       = text_field_tag :email, params[:email],
             placeholder: "Email address",
             required: "autofocus",

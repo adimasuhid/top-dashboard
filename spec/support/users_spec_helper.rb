@@ -6,11 +6,13 @@ module UsersSpecHelper
     click_button "Sign in"
   end
 
-  def user_sign_up(email, password, password_confirmation)
+  def user_sign_up(options)
     visit '/sign_up'
-    fill_in "email", with: email
-    fill_in "password", with: password
-    fill_in "password_confirmation", with: password_confirmation
+    fill_in "first_name", with: options[:first_name]
+    fill_in "last_name", with: options[:last_name]
+    fill_in "email", with: options[:email]
+    fill_in "password", with: options[:password]
+    fill_in "password_confirmation", with: options[:password_confirmation]
     click_button "Sign Up"
   end
 

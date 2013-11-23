@@ -69,12 +69,24 @@ describe "Login Page", :type => :feature do
   describe "Sign Up" do
     it "creates a new user" do
       expect{
-        user_sign_up("mtdcunanan@gmail.com", "lalala", "lalala")
+        user_sign_up(
+          first_name: "Thessa",
+          last_name: "Cunanan",
+          email: "mtdcunanan@gmail.com",
+          password: "lalala",
+          password_confirmation: "lalala"
+        )
       }.to change(User,:count).by(1)
     end
 
     it "redirects to profile" do
-      user_sign_up("mtdcunanan@gmail.com", "lalala", "lalala")
+      user_sign_up(
+        first_name: "Thessa",
+        last_name: "Cunanan",
+        email: "mtdcunanan@gmail.com",
+        password: "lalala",
+        password_confirmation: "lalala"
+      )
       current_path.should == profile_path
     end
   end

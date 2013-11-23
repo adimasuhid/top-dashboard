@@ -1,4 +1,6 @@
 class Student < ActiveRecord::Base
+  include Identifiable
+
   validates :first_name, :last_name, :year_level, :school, presence: true
 
   has_many :time_logs
@@ -20,10 +22,6 @@ class Student < ActiveRecord::Base
 
   def year_level_name
     YEAR_LEVEL.key(year_level)
-  end
-
-  def name
-    "#{first_name} #{last_name}"
   end
 
 end

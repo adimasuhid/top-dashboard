@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
   include Authenticatable
+  include Identifiable
+
   attr_accessor :password
   validates :password, :password_confirmation, presence: true, on: :create
-  validates :email, presence: true
+  validates :email, :first_name, :last_name, presence: true
   validates :email, uniqueness: true
   validates :password, confirmation: true, on: :create
 

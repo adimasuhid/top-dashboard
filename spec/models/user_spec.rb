@@ -2,34 +2,51 @@ require 'spec_helper'
 
 describe User do
   describe "validations" do
-    it "validates presence of password" do
-      expect{User.create!(password: nil, password_confirmation: nil, email: "lala")}.to raise_error
+    let(:user){FactoryGirl.build(:user)}
+
+    it "validates presence of first_name" do
+      user.first_name = nil
+      expect{user.save!}.to raise_error
+    end
+
+    it "validates presence of last_name" do
+      user.last_name = nil
+      expect{user.save!}.to raise_error
     end
 
     it "validates presence of email" do
-      expect{User.create!(password: "lala", password_confirmation: "lala", email: nil)}.to raise_error
+      user.email = nil
+      expect{user.save!}.to raise_error
     end
 
     it "validates uniqueness of email" do
-      User.create!(password: "lala", password_confirmation: "lala", email: "wat@example.com",)
-      expect{User.create!(password: "lala", password_confirmation: "lala", email: "wat@example.com")}.to raise_error
+      User.create!(first_name: "lala", last_name: "lala", password: "lala", password_confirmation: "lala", email: "wat@example.com",)
+      expect{User.create!(first_name: "lala", last_name: "lala", password: "lala", password_confirmation: "lala", email: "wat@example.com")}.to raise_error
     end
 
-    it "validates confirmation of password" do
-      expect{User.create!(password: "lala", password_confirmation: "la", email: "wat@example.com")}.to raise_error
+    it "validates confirmation of password on create" do
+      user.password_confirmation = "la"
+      expect{user.save!}.to raise_error
     end
 
-    it "validates presence of password_confirmation" do
-      expect{User.create!(password: "lala", password_confirmation: nil, email: "wat@example.com")}.to raise_error
+    it "validates presence of password on create" do
+      user.password = nil
+      expect{user.save!}.to raise_error
+    end
+
+
+    it "validates presence of password_confirmation on create" do
+      user.password_confirmation = nil
+      expect{user.save!}.to raise_error
     end
 
     it "does not validate password on update" do
-      user = User.create!(password: "lala", password_confirmation: "lala", email: "wat@example.com")
+      user.save
       expect{user.update_attributes!(password: nil)}.to_not raise_error
     end
 
     it "does not validate password confirmation on update" do
-      user = User.create!(password: "lala", password_confirmation: "lala", email: "wat@example.com")
+      user.save
       expect{user.update_attributes!(password_confirmation: nil)}.to_not raise_error
     end
   end
@@ -94,6 +111,17 @@ describe User do
           @user.save
           @user.password_salt.should be_nil
         end
+
+      end
+    end
+
+    describe "#name" do
+      before :each do
+        @user = FactoryGirl.build :user
+      end
+
+      it "returns first name + last name" do
+        @user.name.should == "#{@user.first_name} #{@user.last_name}"
 
       end
     end
