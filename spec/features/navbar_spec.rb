@@ -34,6 +34,22 @@ describe "Navigation Bar", :type => :feature do
     end
   end
 
+  context "profile link" do
+    before :each do
+      user_sign_in(user.email, user.password)
+    end
+
+    it "shows a profile button" do
+      page.should have_link 'Profile'
+    end
+
+    it "redirects to students page" do
+      click_link("Profile")
+      current_path.should == profile_path
+    end
+
+  end
+
   context "assignments link" do
     context "Given an admin user" do
       before :each do
