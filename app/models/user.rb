@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   has_many :time_logs
   has_many :assignments
+  has_many :students, through: :assignments
 
   before_create :encrypt_password
 

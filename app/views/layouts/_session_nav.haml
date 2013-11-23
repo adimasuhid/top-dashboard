@@ -5,7 +5,7 @@
     %ul.nav.navbar-nav.pull-right
       - if current_user
         - if can?(:read, Assignment)
-          %li= link_to "Assignments", assignments_path
+          %li= link_to "Assignments", assignments_path(mode: :tutor_view)
         %li= link_to "Profile", profile_path
         %li= link_to "Students", students_path
         %li= link_to "Time Logs", time_logs_path

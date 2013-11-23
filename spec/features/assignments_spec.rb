@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe "Assignments Page" do
-  let(:user){FactoryGirl.create(:user)}
   let(:admin){FactoryGirl.create(:admin)}
   let(:student){FactoryGirl.create(:student)}
-  let(:assignment){FactoryGirl.create(:assignment, student: student, user: admin)}
 
   describe "GET /assignments" do
     before :each do
@@ -13,20 +11,25 @@ describe "Assignments Page" do
     end
 
     it "shows a tutor view link" do
-      page.should have_link "Tutor View"
+      page.should have_link "By Tutor"
     end
 
     it "shows a student view link" do
-      page.should have_link "Student View"
+      page.should have_link "By Student"
     end
 
     context "In tutor's view" do
+      before :each do
+        @assignment = FactoryGirl.create(:assignment, student: student, user: admin)
+        visit assignments_path(mode: :tutor_view)
+      end
+
       it "should show tutor's name as title" do
-        find(".card h1").text.should == "Wat User"
+        find(".card h2").text.should == "Wat Admin"
       end
 
       it "should show students' name as content" do
-        first(".card li").text.should == "Thessa Cunanan"
+        first(".card ul li").text.should == "Thessa Cunanan"
       end
     end
 
@@ -36,7 +39,9 @@ describe "Assignments Page" do
     end
 
     context "add assignment button" do
-      it "shows an add assignment button"
+      it "shows an add assignment button" do
+        page.should have_css(".add-assignment")
+      end
       it "redirects to new assignment page"
     end
 

@@ -5,6 +5,7 @@ class Student < ActiveRecord::Base
 
   has_many :time_logs
   has_many :assignments
+  has_many :users, through: :assignments
 
   YEAR_LEVEL = {
     "Gr 1" => 0,
