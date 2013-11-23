@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Time Logs", :type => :feature do
+describe "Time Logs", :type => :feature, :js => true do
   let(:user) {FactoryGirl.create(:user)}
   let(:student) {FactoryGirl.create(:student)}
   let(:add_time_link) {"add a time log"}
@@ -81,40 +81,123 @@ describe "Time Logs", :type => :feature do
 
     context "creating a time log" do
       context "given complete details" do
-        it "creates a time log entry"
-        it "redirects to index path"
-        it "shows a success message"
+        before :each do
+          fill_in_new_time_log(
+            student_name: student.name,
+            duration: 1.5,
+            notes: "lalalala"
+          )
+        end
+
+        it "creates a time log entry" do
+          expect{ click_button 'Save Time Log' }.to change(TimeLog, :count).by(1)
+        end
+
+        it "redirects to index path" do
+          click_button 'Save Time Log'
+          current_path.should == time_logs_path
+        end
+
+        it "shows a success message" do
+          click_button 'Save Time Log'
+          page.should have_content('Success!')
+        end
       end
 
       context "given incomplete details" do
-        it "does not create a time log entry"
-        it "redirects to new path"
-        it "shows an error message"
+        before :each do
+          fill_in_new_time_log(
+            student_name: student.name,
+            duration: 0,
+            notes: "lalalala"
+          )
+        end
+
+        it "does not create a time log entry" do
+          expect{ click_button 'Save Time Log' }.to change(TimeLog, :count).by(0)
+        end
+
+        it "redirects to new path" do
+          click_button 'Save Time Log'
+          current_path.should == new_time_log_path
+        end
+
+        it "shows an error message" do
+          click_button 'Save Time Log'
+          page.should have_content('Oops!')
+        end
       end
     end
   end
 
   describe "GET /time_logs/:id/edit" do
-    #before :each do
-      #user_sign_in(user.email, user.password)
-      #visit new_time_log_path
-    #end
+    before :each do
+      @time_log = FactoryGirl.create(:time_log, user: user, student: student)
+      user_sign_in(user.email, user.password)
+      visit edit_time_log_path(@time_log)
+    end
 
-    it "renders success"
+    it "renders success" do
+      expect(page.status_code).to be(200)
+    end
 
-    it "contains a form"
+    it "contains a form" do
+      page.should have_css("form#edit_time_log_#{@time_log.id}")
+    end
 
     context "editing a time log" do
       context "given complete details" do
-        it "updates a time log entry"
-        it "redirects to index path"
-        it "shows a success message"
+        before :each do
+          edit_time_log(
+            time_log: @time_log,
+            student_name: student.name,
+            duration: 1.5,
+            notes: "lalalala"
+          )
+        end
+
+        it "updates a time log entry" do
+          fill_in("time_log[duration]", with: 2)
+          expect do
+            click_button 'Save Time Log'
+            @time_log.reload
+          end.to change(@time_log, :duration)
+        end
+
+        it "redirects to index path" do
+          click_button 'Save Time Log'
+          current_path.should == time_logs_path
+        end
+
+        it "shows a success message" do
+          click_button 'Save Time Log'
+          page.should have_content('Success!')
+        end
       end
 
       context "given incomplete details" do
-        it "does not cupdate a time log entry"
-        it "redirects to edit path"
-        it "shows an error message"
+        before :each do
+          edit_time_log(
+            time_log: @time_log,
+            student_name: student.name,
+            duration: 0,
+            notes: "lalalala"
+          )
+        end
+        it "does not update a time log entry" do
+          expect do
+            click_button 'Save Time Log'
+            @time_log.reload
+          end.not_to change(@time_log, :duration)
+        end
+        it "redirects to edit path" do
+          click_button 'Save Time Log'
+          current_path.should == edit_time_log_path(@time_log)
+        end
+        it "shows an error message" do
+          click_button 'Save Time Log'
+          page.should have_content('Oops!')
+        end
       end
     end
   end

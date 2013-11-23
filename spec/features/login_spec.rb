@@ -39,7 +39,7 @@ describe "Login Page", :type => :feature do
       end
 
       it "redirects to current page" do
-        current_path.should == current_path
+        current_path.should == sign_in_path
       end
 
       it "shows a success message" do
@@ -76,6 +76,21 @@ describe "Login Page", :type => :feature do
     it "redirects to profile" do
       user_sign_up("mtdcunanan@gmail.com", "lalala", "lalala")
       current_path.should == profile_path
+    end
+  end
+
+  describe "Authenticate User" do
+    let(:user) {FactoryGirl.create(:user)}
+    context "Given that I am not logged in" do
+      it "redirects to sign in page on any page except landing" do
+        visit students_path
+        current_path.should == sign_in_path
+      end
+
+      it "redirects to landing page if going to landing page" do
+        visit root_path
+        current_path.should == root_path
+      end
     end
   end
 

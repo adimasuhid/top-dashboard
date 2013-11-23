@@ -41,6 +41,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'poltergeist'
+  gem 'selenium-webdriver'
 end
 
 group :test do

@@ -14,4 +14,8 @@ module UsersSpecHelper
     click_button "Sign Up"
   end
 
+  def user_sign_out
+    click_on "Sign Out"
+  end
+
 end

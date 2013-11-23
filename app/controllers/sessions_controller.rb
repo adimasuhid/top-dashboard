@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_filter :authenticate_user
+
   def new
 
   end
@@ -9,8 +11,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to profile_path, flash: {success: "You have logged in."}
     else
-      flash.now[:error] = "Invalid email or password."
-      render "new"
+      redirect_to sign_in_path, flash: {error: "Invalid email or password."}
     end
 
   end
