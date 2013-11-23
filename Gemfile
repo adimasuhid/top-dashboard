@@ -33,6 +33,7 @@ gem 'bcrypt-ruby'
 
 gem 'font-awesome-rails'
 gem 'momentjs-rails'
+gem 'cancan'
 
 group :development, :test do
   gem 'rb-fsevent'

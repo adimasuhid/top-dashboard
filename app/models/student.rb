@@ -2,6 +2,7 @@ class Student < ActiveRecord::Base
   validates :first_name, :last_name, :year_level, :school, presence: true
 
   has_many :time_logs
+  has_many :assignments
 
   YEAR_LEVEL = {
     "Gr 1" => 0,

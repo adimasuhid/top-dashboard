@@ -4,6 +4,8 @@
   .collapse.navbar-collapse#user-navbar-collapse
     %ul.nav.navbar-nav.pull-right
       - if current_user
+        - if can?(:read, Assignment)
+          %li= link_to "Assignments", assignments_path
         %li= link_to "Students", students_path
         %li= link_to "Time Logs", time_logs_path
         %li= link_to "Sign Out", sign_out_path

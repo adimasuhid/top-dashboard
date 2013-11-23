@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe "Students Page", :type => :features do
+  let(:user){FactoryGirl.create(:user)}
+
   describe "GET /students" do
     before :each do
+      user_sign_in(user.email, user.password)
       visit students_path
     end
 
@@ -61,8 +64,9 @@ describe "Students Page", :type => :features do
 
   describe "Get /students/:id/edit" do
     before :each do
-      @user = FactoryGirl.create(:student)
-      visit edit_student_path(@user)
+      @student = FactoryGirl.create(:student)
+      user_sign_in(user.email, user.password)
+      visit edit_student_path(@student)
     end
 
     it "renders success" do
@@ -70,7 +74,7 @@ describe "Students Page", :type => :features do
     end
 
     it "contains a form" do
-      page.should have_css("form#edit_student_#{@user.id}")
+      page.should have_css("form#edit_student_#{@student.id}")
     end
 
     it "does not create a new student on save" do
@@ -79,8 +83,8 @@ describe "Students Page", :type => :features do
 
     context "editing a student" do
       before :each do
-        @user = FactoryGirl.create(:student)
-        visit edit_student_path(@user)
+        @student = FactoryGirl.create(:student)
+        visit edit_student_path(@student)
         @new_name = "Lala"
         fill_in("student[first_name]", with: "#{@new_name}")
       end
@@ -90,8 +94,8 @@ describe "Students Page", :type => :features do
         it "updates first name" do
           expect do
             click_button 'Save Student'
-            @user.reload
-          end.to change(@user, :first_name)
+            @student.reload
+          end.to change(@student, :first_name)
         end
 
         it "shows a success message" do
@@ -117,8 +121,8 @@ describe "Students Page", :type => :features do
         it "updates first name" do
           expect do
             click_button 'Save Student'
-            @user.reload
-          end.not_to change(@user, :first_name)
+            @student.reload
+          end.not_to change(@student, :first_name)
         end
       end
     end
@@ -126,6 +130,7 @@ describe "Students Page", :type => :features do
 
   describe "Get /students/new" do
     before :each do
+      user_sign_in(user.email, user.password)
       visit new_student_path
     end
 
