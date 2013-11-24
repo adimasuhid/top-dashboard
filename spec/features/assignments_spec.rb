@@ -34,21 +34,72 @@ describe "Assignments Page" do
     end
 
     context "In students view" do
-      it "should show tutor's name as content"
-      it "should show students' name as title"
+      before :each do
+        @assignment = FactoryGirl.create(:assignment, student: student, user: admin)
+        visit assignments_path(mode: :student_view)
+      end
+
+      it "should show students' name as title" do
+        find(".card h2").text.should == "Thessa Cunanan"
+      end
+
+      it "should show tutor's name as content" do
+        first(".card ul li").text.should == "Wat Admin"
+      end
     end
 
     context "add assignment button" do
       it "shows an add assignment button" do
         page.should have_css(".add-assignment")
       end
-      it "redirects to new assignment page"
+
+      it "redirects to new assignment page" do
+        find(".add-assignment").click
+        current_path.should == new_assignment_path
+      end
     end
 
     context "delete assignment button" do
-      it "shows a delete assignment button"
-      it "reduces assignment count by 1"
-      it "redirects to assignments page"
+      before :each do
+        @assignment = FactoryGirl.create(:assignment, student: student, user: admin)
+        visit assignments_path(mode: :tutor_view)
+      end
+
+      it "shows a delete assignment button" do
+        page.should have_css(".delete-assignment")
+      end
+
+      it "reduces assignment count by 1" do
+        expect{find(".delete-assignment").click}.to change(Assignment, :count).by(-1)
+      end
+
+      it "redirects to assignments page" do
+        find(".delete-assignment").click
+        current_path.should == assignments_path
+      end
+
+      it "shows success" do
+        find(".delete-assignment").click
+        page.should have_content("Success")
+      end
+    end
+  end
+
+  describe "GET /assignments/new" do
+    it "shows add new assignment"
+    it "shows a form"
+    context "click save assignment" do
+      context "Given unique assignment" do
+        it "increases assignment count by 1"
+        it "redirects to assignment page"
+        it "shows success message"
+      end
+
+      context "Given non-unique assignment" do
+        it "does not increase assignment count by 1"
+        it "redirects to assignment page"
+        it "shows error message"
+      end
     end
   end
 end

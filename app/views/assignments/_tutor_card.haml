@@ -1,0 +1,12 @@
+.card
+  %h2= user.name
+  = link_to new_assignment_path, class: "add-assignment btn btn-info" do
+    %i.fa.fa-plus.fa-lg
+
+  %ul
+    - user.assignments.each do |assignment|
+      %li
+        = assignment.student.name
+        = link_to assignment_path(assignment), method: :delete, class: "delete-assignment" do
+          %i.fa.fa-minus-circle.red
+
