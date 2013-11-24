@@ -1,12 +1,15 @@
-.card
-  %h2= student.name
-  = link_to new_assignment_path, class: "add-assignment btn btn-info" do
-    %i.fa.fa-plus.fa-lg
+.card.panel{:class => student.assignments.size == 0 ? "panel-warning" : "panel-default"}
+  .panel-heading
+    %strong= student.name
+    .pull-right
+      = link_to new_assignment_path, class: "add-assignment" do
+        %i.fa.fa-plus-square.fa-2x.blue
 
-  %ul
-    - student.assignments.each do |assignment|
-      %li
-        = assignment.user.name
-        = link_to assignment_path(assignment), method: :delete, class: "delete-assignment" do
-          %i.fa.fa-minus-circle.red
+  .panel-body
+    %ul
+      - student.assignments.each do |assignment|
+        %li
+          = link_to assignment_path(assignment), method: :delete, class: "delete-assignment" do
+            %i.fa.fa-minus-circle.red
+          = assignment.user.name
 

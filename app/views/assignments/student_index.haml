@@ -1,4 +1,6 @@
 = render "assignment_nav"
 
-- @students.each do |student|
-  = render "student_card", student: student
+.assignments
+  - @students.each do |student|
+    .col-md-6
+      = render "student_card", student: student

@@ -25,7 +25,7 @@ describe "Assignments Page" do
       end
 
       it "should show tutor's name as title" do
-        find(".card h2").text.should == "Wat Admin"
+        find(".card strong").text.should == "Wat Admin"
       end
 
       it "should show students' name as content" do
@@ -40,7 +40,7 @@ describe "Assignments Page" do
       end
 
       it "should show students' name as title" do
-        find(".card h2").text.should == "Thessa Cunanan"
+        find(".card strong").text.should == "Thessa Cunanan"
       end
 
       it "should show tutor's name as content" do

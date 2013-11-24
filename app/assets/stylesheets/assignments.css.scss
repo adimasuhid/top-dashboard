@@ -5,3 +5,27 @@
 .red{
   color: #d9534f;
 }
+
+.assignments{
+  .col-md-6{
+    float:none;
+    display:inline-block;
+    vertical-align: top;
+    width: 49%;
+  }
+}
+
+.card{
+  strong {
+    font-size: 20px;
+  }
+
+  ul{
+    padding-left: 0px;
+    font-size:18px;
+    li {
+      list-style-type: none;
+      line-height: 30px;
+    }
+  }
+}

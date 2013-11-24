@@ -1,4 +1,11 @@
-%h1 Assignments
+%h1
+  Assignments
 
-= link_to "By Tutor", assignments_path(mode: :tutor_view)
-= link_to "By Student", assignments_path(mode: :student_view)
+  .pull-right
+    = link_to assignments_path(mode: :tutor_view), class: "btn btn-primary" do
+      %i.fa.fa-magic
+      By Tutor
+
+    = link_to assignments_path(mode: :student_view), class: "btn btn-primary" do
+      %i.fa.fa-lightbulb-o
+      By Student
