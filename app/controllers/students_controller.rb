@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   def index
-    @students = Student.all
+    @students = current_user.admin? ? Student.all : current_user.students
   end
 
   def new

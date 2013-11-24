@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Students Page", :type => :features do
-  let(:user){FactoryGirl.create(:user)}
+  let(:user){FactoryGirl.create(:admin)}
 
   describe "GET /students" do
     before :each do
@@ -59,7 +59,20 @@ describe "Students Page", :type => :features do
           page.should have_content('Gr 1')
         end
       end
+
+      context "Given an admin user" do
+        it "shows all students"
+        it "shows edit student"
+        it "shows add student"
+      end
+
+      context "Given tutor user" do
+        it "shows only students assigned to tutor"
+        it "does not show edit student"
+        it "does not show add student"
+      end
     end
+
   end
 
   describe "Get /students/:id/edit" do

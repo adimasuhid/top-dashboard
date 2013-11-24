@@ -5,12 +5,12 @@ class TimeLogsController < ApplicationController
 
   def new
     @time_log = current_user.time_logs.new
-    @students = Student.all
+    @students = current_user.admin? ? Student.all : current_user.students
   end
 
   def edit
     @time_log = current_user.time_logs.find(params[:id])
-    @students = Student.all
+    @students = current_user.admin? ? Student.all : current_user.students
   end
 
   def create

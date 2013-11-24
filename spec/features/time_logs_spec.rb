@@ -63,6 +63,16 @@ describe "Time Logs", :type => :feature, :js => true do
         end
       end
     end
+
+    context "Given an admin user" do
+      it "shows all time logs"
+      it "shows all students"
+    end
+
+    context "Given a tutor user" do
+      it "shows only tutor's timelogs"
+      it "shows only students that are assigned to me"
+    end
   end
 
   describe "GET /time_logs/new" do

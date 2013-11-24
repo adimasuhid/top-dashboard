@@ -1,7 +1,8 @@
 %h1
   Your Students
-  .pull-right
-    = link_to "add a student", new_student_path, class: "btn btn-primary"
+  - if can?(:add, Student)
+    .pull-right
+      = link_to "add a student", new_student_path, class: "btn btn-primary"
 
 
 %table.table.table-hover#students
@@ -19,4 +20,5 @@
         %td= student.last_name
         %td= student.school
         %td= student.year_level_name
-        %td= link_to "edit student", edit_student_path(student), class: "btn btn-primary"
+        - if can?(:edit, Student)
+          %td= link_to "edit student", edit_student_path(student), class: "btn btn-primary"
