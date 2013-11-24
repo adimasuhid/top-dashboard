@@ -10,7 +10,20 @@ class AssignmentsController < ApplicationController
   end
 
   def new
+    @assignment = Assignment.new
+    @users = User.all
+    @students = Student.all
+  end
 
+  def create
+    @assignment = Assignment.new assignment_params
+    message = if @assignment.save
+                {success: "Assigned #{@assignment.student.name} to #{@assignment.user.name}"}
+              else
+                {error: "Failed to delete assignment"}
+              end
+
+    redirect_to assignments_path(mode: :tutor_view), flash: message
   end
 
   def destroy
@@ -29,6 +42,6 @@ class AssignmentsController < ApplicationController
 
   private
     def assignment_params
-      params.permit(:student_id, :user_id, :assignment_id)
+      params.require(:assignment).permit(:student_id, :user_id, :assignment_id)
     end
 end

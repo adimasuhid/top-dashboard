@@ -86,19 +86,59 @@ describe "Assignments Page" do
   end
 
   describe "GET /assignments/new" do
-    it "shows add new assignment"
-    it "shows a form"
+    before :each do
+      user_sign_in(admin.email, admin.password)
+      student.save
+      visit new_assignment_path
+    end
+
+    it "shows add new assignment" do
+      page.should have_content("Add New Assignment")
+    end
+
+    it "shows a form" do
+      page.should have_css("form#new_assignment")
+    end
+
     context "click save assignment" do
-      context "Given unique assignment" do
-        it "increases assignment count by 1"
-        it "redirects to assignment page"
-        it "shows success message"
+      before :each do
+        fill_in_assignment("Wat Admin", "Thessa Cunanan")
       end
 
-      context "Given non-unique assignment" do
-        it "does not increase assignment count by 1"
-        it "redirects to assignment page"
-        it "shows error message"
+      context "Given unique assignment" do
+        it "increases assignment count by 1" do
+          expect{click_on("Save Assignment")}.to change(Assignment,:count).by(1)
+        end
+
+        it "redirects to assignment page" do
+          click_on("Save Assignment")
+          current_path.should == assignments_path
+        end
+
+        it "shows success message" do
+          click_on("Save Assignment")
+          page.should have_content("Success")
+        end
+      end
+
+      context "Given non-unique assignment or assigning same student to same tutor" do
+        before :each do
+          @assignment = FactoryGirl.create(:assignment, student: student, user: admin)
+        end
+
+        it "does not increase assignment count by 1" do
+          expect{click_on("Save Assignment")}.to_not change(Assignment,:count)
+        end
+
+        it "redirects to assignment page" do
+          click_on("Save Assignment")
+          current_path.should == assignments_path
+        end
+
+        it "shows error message" do
+          click_on("Save Assignment")
+          page.should have_content("Oops")
+        end
       end
     end
   end

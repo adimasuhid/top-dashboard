@@ -1,0 +1,7 @@
+.form-group
+  = f.label 'Tutor'
+  = f.select :user_id, options_for_select(select_options(@users, :name))
+.form-group
+  = f.label 'Student'
+  = f.select :student_id, options_for_select(select_options(@students, :name))
+= f.submit "Save Assignment", class: "btn btn-primary"
