@@ -116,11 +116,35 @@ describe "Time Logs", :type => :feature, :js => true do
 
     context "creating a time log" do
       context "given admin user" do
-        it "shows all students"
+        before :each do
+          @second_student = FactoryGirl.create(:student, first_name: "Lala")
+          user_sign_in(admin.email, admin.password)
+          fill_in_new_time_log(
+            student_name: student.name,
+            duration: 1.5,
+            notes: "lalalala"
+          )
+        end
+
+        it "shows all students" do
+          page.should have_select('time_log[student_id]', :options=>["#{student.name}","#{@second_student.name}"])
+        end
       end
 
       context "given tutor user" do
-        it "shows only students that are assigned to me"
+        before :each do
+          @second_student = FactoryGirl.create(:student, first_name: "Lala")
+          user_sign_in(user.email, user.password)
+          fill_in_new_time_log(
+            student_name: student.name,
+            duration: 1.5,
+            notes: "lalalala"
+          )
+        end
+
+        it "shows only students that are assigned to me" do
+          page.should have_select('time_log[student_id]', :options=>["#{student.name}"])
+        end
       end
 
       context "given complete details" do
