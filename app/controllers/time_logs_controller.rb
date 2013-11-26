@@ -1,6 +1,10 @@
 class TimeLogsController < ApplicationController
   def index
-    @time_logs = current_user.time_logs.includes(:student)
+    @time_logs = if current_user.admin?
+                   TimeLog.all.includes(:student, :user)
+                 else
+                   current_user.time_logs.includes(:student, :user)
+                 end
   end
 
   def new

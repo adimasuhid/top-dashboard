@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Time Logs", :type => :feature, :js => true do
   let(:user) {FactoryGirl.create(:user)}
+  let(:admin) {FactoryGirl.create(:admin)}
   let(:student) {FactoryGirl.create(:student)}
   let(:add_time_link) {"add a time log"}
   let(:edit_time_link) {"edit time log"}
@@ -53,9 +54,13 @@ describe "Time Logs", :type => :feature, :js => true do
         page.should have_css('table#time_logs')
       end
 
-      context "Given a student named Thessa Cunanan with a 1hr session" do
+      context "Given a student named Thessa Cunanan and a tutor Wat User with a 1hr session" do
         it "shows a row with Thessa" do
           page.should have_content("Thessa Cunanan")
+        end
+
+        it "shows a row with Wat User" do
+          page.should have_content("Wat User")
         end
 
         it "shows 1 hr" do
@@ -65,18 +70,38 @@ describe "Time Logs", :type => :feature, :js => true do
     end
 
     context "Given an admin user" do
-      it "shows all time logs"
-      it "shows all students"
+      before :each do
+        @user_time_log = FactoryGirl.create(:time_log, user: user, student: student)
+        @admin_time_log = FactoryGirl.create(:time_log, user: admin, student: student)
+        user_sign_in(admin.email, admin.password)
+        visit time_logs_path
+      end
+
+      it "shows all time logs" do
+        page.should have_content("Wat User")
+        page.should have_content("Wat Admin")
+      end
+
     end
 
     context "Given a tutor user" do
-      it "shows only tutor's timelogs"
-      it "shows only students that are assigned to me"
+      before :each do
+        @user_time_log = FactoryGirl.create(:time_log, user: user, student: student)
+        @admin_time_log = FactoryGirl.create(:time_log, user: admin, student: student)
+        user_sign_in(user.email, user.password)
+        visit time_logs_path
+      end
+
+      it "shows only tutor's timelogs" do
+        page.should have_content("Wat User")
+        page.should have_no_content("Wat Admin")
+      end
     end
   end
 
   describe "GET /time_logs/new" do
     before :each do
+      @assignment = FactoryGirl.create(:assignment, user: user, student: student)
       user_sign_in(user.email, user.password)
       visit new_time_log_path
     end
@@ -90,6 +115,14 @@ describe "Time Logs", :type => :feature, :js => true do
     end
 
     context "creating a time log" do
+      context "given admin user" do
+        it "shows all students"
+      end
+
+      context "given tutor user" do
+        it "shows only students that are assigned to me"
+      end
+
       context "given complete details" do
         before :each do
           fill_in_new_time_log(
@@ -143,6 +176,7 @@ describe "Time Logs", :type => :feature, :js => true do
   describe "GET /time_logs/:id/edit" do
     before :each do
       @time_log = FactoryGirl.create(:time_log, user: user, student: student)
+      @assignment = FactoryGirl.create(:assignment, user: user, student: student)
       user_sign_in(user.email, user.password)
       visit edit_time_log_path(@time_log)
     end
