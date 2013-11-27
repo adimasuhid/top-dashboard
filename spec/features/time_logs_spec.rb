@@ -59,7 +59,7 @@ describe "Time Logs", :type => :feature, :js => true do
       context "Sortable" do
         context "By Student name" do
           before :each do
-            find("#student_name").click
+            find("#student").click
           end
 
           it "returns a sorted student name" do
@@ -71,7 +71,7 @@ describe "Time Logs", :type => :feature, :js => true do
           before :each do
             user_sign_in(admin.email, admin.password)
             visit time_logs_path
-            find("#tutor_name").click
+            find("#tutor").click
           end
 
           it "returns a sorted student name" do

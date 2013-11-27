@@ -43,17 +43,19 @@ class TimeLogsController < ApplicationController
     end
 
     def sort_params
-      params.permit(:sort)[:sort]
+      params.permit(:sort,:direction)
     end
 
     def sortable
-      case sort_params
-      when "student"
-        "students.first_name"
-      when "tutor"
-        "users.first_name"
-      when "date"
-        "session_date"
-      end
+      order = case sort_params[:sort]
+              when "student"
+                "students.first_name"
+              when "tutor"
+                "users.first_name"
+              when "date"
+                "session_date"
+              end
+
+      "#{order} #{sort_params[:direction]}"
     end
 end

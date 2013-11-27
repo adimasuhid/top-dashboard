@@ -6,9 +6,9 @@
 %table.table.table-hover#time_logs
   %thead
     %tr
-      %th=link_to "Student Name", {sort: "student"}, id: "student_name"
-      %th=link_to "Tutor Name", {sort: "tutor"}, id: "tutor_name"
-      %th=link_to "Date", {sort: "date"}, id: "date"
+      %th=sortable "student", "Student Name"
+      %th=sortable "tutor", "Tutor Name"
+      %th=sortable "date", "Date"
       %th Duration
       %th Notes
       %th

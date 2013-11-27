@@ -14,4 +14,13 @@ describe TimeLogsHelper do
       display_hours(@duration).include?("hrs")
     end
   end
+
+  describe "#sortable" do
+    it "creates a link"
+    it "takes two required parameters" do
+      pending #cannot test due to some routing issues
+    end
+    it "adds class"
+    it "adds order"
+  end
 end
