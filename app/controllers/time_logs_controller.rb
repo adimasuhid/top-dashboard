@@ -1,9 +1,9 @@
 class TimeLogsController < ApplicationController
   def index
     @time_logs = if current_user.admin?
-                   TimeLog.all.includes(:student, :user)
+                   TimeLog.all.includes(:student, :user).order(sortable)
                  else
-                   current_user.time_logs.includes(:student, :user)
+                   current_user.time_logs.includes(:student, :user).order(sortable)
                  end
   end
 
@@ -40,5 +40,20 @@ class TimeLogsController < ApplicationController
   private
     def time_log_params
       params.require(:time_log).permit(:session_date,:student_id,:duration,:notes)
+    end
+
+    def sort_params
+      params.permit(:sort)[:sort]
+    end
+
+    def sortable
+      case sort_params
+      when "student"
+        "students.first_name"
+      when "tutor"
+        "users.first_name"
+      when "date"
+        "session_date"
+      end
     end
 end

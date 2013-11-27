@@ -44,9 +44,11 @@ describe "Time Logs", :type => :feature, :js => true do
       end
     end
 
-    context "a table of my current logs" do
+    context "A table of my current logs" do
       before :each do
-        @time_log = FactoryGirl.create(:time_log, user: user, student: student)
+        @time_log = FactoryGirl.create(:time_log, user: admin, student: student, session_date: DateTime.now-1.day)
+        @second_student = FactoryGirl.create(:student, first_name: "Lala")
+        @second_time_log = FactoryGirl.create(:time_log, user: user, student: @second_student)
         visit time_logs_path
       end
 
@@ -54,9 +56,45 @@ describe "Time Logs", :type => :feature, :js => true do
         page.should have_css('table#time_logs')
       end
 
-      context "Given a student named Thessa Cunanan and a tutor Wat User with a 1hr session" do
+      context "Sortable" do
+        context "By Student name" do
+          before :each do
+            find("#student_name").click
+          end
+
+          it "returns a sorted student name" do
+            first("tr td").text.should == "Lala Cunanan"
+          end
+        end
+
+        context "By Tutor name" do
+          before :each do
+            user_sign_in(admin.email, admin.password)
+            visit time_logs_path
+            find("#tutor_name").click
+          end
+
+          it "returns a sorted student name" do
+            first("tr > td:nth-child(2)").text.should == "Wat Admin"
+          end
+        end
+
+        context "By Date" do
+          before :each do
+            user_sign_in(admin.email, admin.password)
+            visit time_logs_path
+            find("#date").click
+          end
+
+          it "returns a sorted student name" do
+            first("tr > td:nth-child(3)").text.should == (DateTime.now-1.day).strftime("%Y-%m-%d")
+          end
+        end
+      end
+
+      context "Given a student named Lala Cunanan and a tutor Wat User with a 1hr session" do
         it "shows a row with Thessa" do
-          page.should have_content("Thessa Cunanan")
+          page.should have_content("Lala Cunanan")
         end
 
         it "shows a row with Wat User" do
