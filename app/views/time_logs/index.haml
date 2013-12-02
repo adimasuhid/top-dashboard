@@ -12,6 +12,7 @@
       %th Duration
       %th Notes
       %th
+      %th
   %tbody
     - @time_logs.each do |time_log|
       %tr
@@ -20,4 +21,13 @@
         %td= time_log.session_date
         %td= display_hours(time_log.duration)
         %td= time_log.notes
-        %td= link_to "edit time log", edit_time_log_path(time_log), class: "btn btn-primary"
+        - if current_user?(time_log.user)
+          %td
+            = link_to edit_time_log_path(time_log), class: "btn btn-primary" do
+              %i.fa.fa-edit.fa-lg
+          %td
+            = link_to time_log_path(time_log), method: :delete, class: "btn btn-danger" do
+              %i.fa.fa-minus-circle.fa-lg
+        -else
+          %td
+          %td

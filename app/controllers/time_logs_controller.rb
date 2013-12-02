@@ -26,6 +26,15 @@ class TimeLogsController < ApplicationController
     end
   end
 
+  def destroy
+    @time_log = current_user.time_logs.find(params[:id])
+    if @time_log.destroy
+      redirect_to time_logs_path, flash: {success: "Removed Time Log"}
+    else
+      redirect_to time_logs_path, flash: {error: "Something's up. Contact Admin"}
+    end
+  end
+
   def update
     #find out how to user strong params
     @time_log = current_user.time_logs.find(params[:id])

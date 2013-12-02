@@ -35,13 +35,20 @@ describe "Time Logs", :type => :feature, :js => true do
       end
 
       it "shows an edit time log link" do
-        page.should have_link edit_time_link
+        page.should have_css("i.fa-edit")
       end
 
       it "redirects to edit a time log page" do
-        click_link edit_time_link
+        find("i.fa-edit").click
         current_path.should == edit_time_log_path(@time_log)
       end
+
+      it "shows only on the current user (even admin)"
+    end
+
+    context "delete a time log link" do
+      it "shows only the time log of a current user"
+      it "sends a delete request"
     end
 
     context "A table of my current logs" do
@@ -306,5 +313,9 @@ describe "Time Logs", :type => :feature, :js => true do
         end
       end
     end
+  end
+
+  describe "DELETE /time_logs/:id" do
+    it "reducest time log count by 1"
   end
 end
