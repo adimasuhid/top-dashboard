@@ -11,16 +11,25 @@
       %th=sortable "date", "Date"
       %th Duration
       %th Notes
-      %th
-      %th
+      -if current_user.admin?
+        %th Informed?
+        %th Parents Paid?
+        %th Paid Tutors?
   %tbody
     - @time_logs.each do |time_log|
-      %tr
+      %tr{id: time_log.id}
         %td= time_log.student.name
         %td= time_log.user.name
         %td= time_log.session_date
         %td= display_hours(time_log.duration)
         %td= time_log.notes
+        - if current_user.admin?
+          %td
+            = render 'checkbox', status: time_log.parent_informed, klass: "informed"
+          %td
+            = render 'checkbox', status: time_log.parent_paid, klass: "parent_paid"
+          %td
+            = render 'checkbox', status: time_log.tutor_paid, klass: "tutor_paid"
         - if current_user?(time_log.user)
           %td
             = link_to edit_time_log_path(time_log), class: "btn btn-primary" do

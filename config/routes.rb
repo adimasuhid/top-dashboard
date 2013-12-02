@@ -2,7 +2,11 @@ TopDashboard::Application.routes.draw do
    resources :sessions, only: [:new, :create, :destroy]
    resources :students
    resources :users, only: [:show,:new, :create]
-   resources :time_logs
+   resources :time_logs do
+     member do
+       put :ajax_update
+     end
+   end
    resources :assignments, only: [:index, :new, :destroy, :create]
 
    get '/profile', to: 'users#show'

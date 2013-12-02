@@ -23,4 +23,5 @@ describe TimeLogsHelper do
     it "adds class"
     it "adds order"
   end
+
 end

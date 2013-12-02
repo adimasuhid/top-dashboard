@@ -51,6 +51,27 @@ describe "Time Logs", :type => :feature, :js => true do
       it "sends a delete request"
     end
 
+    context "forward to parents link" do
+      it "shows an image of checkbox"
+      it "shows checked when forwarded is true"
+      it "shows checkbox when forwarded is false"
+      it "updates checkbox when clicked"
+    end
+
+    context "parents are paid link" do
+      it "shows an image of checkbox"
+      it "shows checked when parents are paid"
+      it "shows checkbox when parents are not paid"
+      it "updates checkbox when clicked"
+    end
+
+    context "tutor is paid link" do
+      it "shows an image of checkbox"
+      it "shows checked when tutors are paid"
+      it "shows checkbox when tutors are not paid"
+      it "updates checkbox when clicked"
+    end
+
     context "A table of my current logs" do
       before :each do
         @time_log = FactoryGirl.create(:time_log, user: admin, student: student, session_date: DateTime.now-1.day)
@@ -312,6 +333,25 @@ describe "Time Logs", :type => :feature, :js => true do
           page.should have_content('Oops!')
         end
       end
+
+      context "forward to parents link" do
+        it "shows an image of checkbox"
+        it "shows checked when forwarded is true"
+        it "shows checkbox when forwarded is false"
+      end
+
+      context "parents are paid link" do
+        it "shows an image of checkbox"
+        it "shows checked when parents are paid"
+        it "shows checkbox when parents are not paid"
+      end
+
+      context "tutor is paid link" do
+        it "shows an image of checkbox"
+        it "shows checked when tutors are paid"
+        it "shows checkbox when tutors are not paid"
+      end
+
     end
   end
 

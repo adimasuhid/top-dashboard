@@ -43,12 +43,22 @@ class TimeLogsController < ApplicationController
     else
       redirect_to edit_time_log_path, flash: {error: "Fill in all details"}
     end
-
   end
+
+  def ajax_update
+    raise Error unless current_user.admin?
+    @time_log = TimeLog.find(params[:id])
+    @time_log.update_attributes(time_log_params)
+
+    render :nothing => true
+  end
+
+
 
   private
     def time_log_params
-      params.require(:time_log).permit(:session_date,:student_id,:duration,:notes)
+      params.require(:time_log).permit(:session_date,:student_id,:duration,:notes,
+                                      :parent_informed, :parent_paid, :tutor_paid)
     end
 
     def sort_params
