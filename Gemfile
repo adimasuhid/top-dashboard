@@ -49,6 +49,7 @@ end
 group :test do
   gem 'factory_girl'
   gem 'database_cleaner'
+  gem 'ci_reporter'
 end
 
 gem 'rails_12factor', group: :production
